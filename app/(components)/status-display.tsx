@@ -10,24 +10,27 @@ interface StatusDisplayProps {
 
 
 const StatusDisplay = ({ status }: StatusDisplayProps) => {
-    const getStatusIcon = (s: string) => {
-        const normalizeStatus = s.toLowerCase();
+    const getStatusIcon = (status: string) => {
+        const normalizeStatus = status.toLowerCase().replace('_', ' ');
 
         switch(normalizeStatus) {
             case "completed":
-                return faCheckCircle;
+                return { icon: faCheckCircle, color: "text-green-500" };
             case "in progress":
-                return faHourglass;
+                return { icon: faHourglass, color: "text-blue-500" };
             case "pending":
-                return faCircleExclamation;
+                return { icon: faCircleExclamation, color: "text-yellow-500" };
             default:
-                return faCircleExclamation;
+                return { icon: faCircleExclamation, color: "text-gray-500" };
         }
     }
+
+    const { icon, color } = getStatusIcon(status);
+
     return (
         <div className="flex items-center">
-            <FontAwesomeIcon icon={getStatusIcon(status)} className="text-primary-500 dark:text-primary-400" />
-            <span className="ml-2">{status}</span>
+            <FontAwesomeIcon icon={icon} className={`${color} w-4 h-4` }/>
+            <span className="ml-2 text-sm capitalize">{status.replace('_', ' ')}</span>
         </div>
     );
 }
