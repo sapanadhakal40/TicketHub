@@ -1,15 +1,13 @@
 export interface Ticket {
-    id: string;
-    title: string;
-    description: string;
-    priority: number;
-    progress: number;
-    status: string;
-    createdAt: string;
-    category: string; 
-    assignedTo?: string; 
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  priority: number;
+  progress: number;
+  status: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
   }
   
-  export type TicketStatus = 'not started' | 'started' | 'done';
-  
-  export type TicketCategory = 'bug' | 'feature' | 'enhancement' | 'maintenance';
