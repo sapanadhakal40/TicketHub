@@ -1,2 +1,49 @@
-@import "tailwindcss";
 
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme variables */
+  --page-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-hover-bg: #f1f5f9;
+  --nav-bg: #ffffff;
+  --text-color: #1e293b;
+  --border-color: #e2e8f0;
+}
+
+.dark {
+  /* Dark theme variables */
+  --page-bg: #0f172a;
+  --card-bg: #1e293b;
+  --card-hover-bg: #334155;
+  --nav-bg: #1e293b; 
+  --text-color: #f8fafc;
+  --border-color: #334155;
+}
+
+body {
+  background-color: var(--page-bg);
+  color: var(--text-color);
+}
+
+.icon {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+
+
+/* Additional utility classes */
+@layer components {
+    .btn-primary {
+      @apply px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-600 transition-all;
+    }
+    
+    .card {
+      @apply bg-white dark:bg-gray-800 rounded-md shadow-md border border-gray-300 dark:border-gray-700;
+    }
+  }
