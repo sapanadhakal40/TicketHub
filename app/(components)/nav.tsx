@@ -28,7 +28,7 @@ const Nav = () => {
                         <FontAwesomeIcon icon={faHome} className="icon" />
                         <span className="font-medium">Dashboard</span>
                     </Link>
-                    <Link href="/TicketPage/new" className={`flex items-center space-x-2 ${isActive("/TicketPage/new") ? "text-blue-600 dark:text-blue-400" : 'text-text-color hover:text-blue-600 dark:hover:text-blue-400'} transition-colors duration-200`}>
+                    <Link href="/ticket-page/new" className={`flex items-center space-x-2 ${isActive("/TicketPage/new") ? "text-blue-600 dark:text-blue-400" : 'text-text-color hover:text-blue-600 dark:hover:text-blue-400'} transition-colors duration-200`}>
                         <FontAwesomeIcon icon={faTicket} className="icon" />
                         <span className="font-medium">Tickets</span>
                     </Link>
@@ -85,7 +85,7 @@ const Nav = () => {
             {menuOpen && (
                 <div className="md:hidden mt-4 flex flex-col space-y-4 py-4 border-t border-border-color">
                     <Link 
-                        href="/TicketPage/new" 
+                        href="/ticket-page/new" 
                         className={`flex items-center space-x-2 py-2 ${isActive("/TicketPage/new") ? "text-blue-600 dark:text-blue-400" : 'text-text-color'}`}
                         onClick={() => setMenuOpen(false)}
                     >
