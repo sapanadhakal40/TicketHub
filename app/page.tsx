@@ -4,10 +4,10 @@ import { Ticket } from './types/ticket'
 
 const Dashboard = () => {
   const dummyTickets: Ticket[] = [
-      { id: "1", title: "Bug Fix", description: "Fix login issue", priority: 2, progress: 70, status: "started", category: "bug", createdAt: new Date().toISOString() },
+      { id: "1", title: "Bug Fix", description: "Fix login issue", priority: 2, progress: 70, status: "in-progress", category: "bug", createdAt: new Date().toISOString() },
       { id: "2", title: "New Feature", description: "Add dark mode", priority: 1, progress: 40, status: "pending", category: "feature", createdAt: new Date().toISOString() },
-      { id: "3", title: "Update Docs", description: "Update API documentation", priority: 3, progress: 90, status: "done", category: "maintenance", createdAt: new Date().toISOString() },
-      { id: "4", title: "Performance", description: "Optimize loading time", priority: 2, progress: 30, status: "not started", category: "enhancement", createdAt: new Date().toISOString() },
+      { id: "3", title: "Update Docs", description: "Update API documentation", priority: 3, progress: 90, status: "completed", category: "maintenance", createdAt: new Date().toISOString() },
+      { id: "4", title: "Performance", description: "Optimize loading time", priority: 2, progress: 20, status: "not_started", category: "enhancement", createdAt: new Date().toISOString() },
     ];
 
 
