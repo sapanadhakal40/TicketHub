@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import Ticket, { connectDB} from '../../../../(models)/ticket';
 import { isValidObjectId } from 'mongoose';
 
-interface RouteParams {
+interface RouteContext {
   params: {
     id: string;
   }
@@ -12,17 +12,17 @@ interface RouteParams {
 // Get a specific ticket
 export async function GET(
   request: NextRequest,
-  { params }: RouteParams
+context: RouteContext
 ) {
   try {
-    if (!isValidObjectId(params.id)) {
+    if (!isValidObjectId(context.params.id)) {
         return NextResponse.json(
           { error: "Invalid ticket ID format" },
           { status: 400 }
         );
       }
     await connectDB();
-    const ticket = await Ticket.findById(params.id);
+    const ticket = await Ticket.findById(context.params.id);
     if (!ticket) {
         return NextResponse.json({ error: "Ticket not found" }, { status: 404 });
       }
