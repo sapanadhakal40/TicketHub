@@ -19,16 +19,22 @@ interface PageParams {
     updatedAt: string;
   }
 
-  const getTicketById = async (id: string) => {
+  const getTicketById = async (id: string): Promise<TicketData | null> => { 
     try {
       if (!isValidObjectId(id)) {
         console.error("Invalid ticket ID format");
         return null;
       }
   
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL ;
+      if (!apiUrl) {
+        throw new Error("API URL is not configured");
+      }
       const res = await fetch(`${apiUrl}/api/tickets/${id}`, {
         cache: "no-store",
+        next: { 
+          revalidate: 0 
+        }
       });
   
       if (!res.ok) {
@@ -38,8 +44,18 @@ interface PageParams {
       const data = await res.json();
       return {
         ...data,
-        _id: data._id.toString() 
-      };
+        _id: data._id.toString() ,
+        title: data.title || "",
+      description: data.description || "",
+      category: data.category || "bug",
+      priority: data.priority || 1,
+      progress: data.progress || 0,
+      status: data.status || "not_started",
+      active: data.active ?? true,
+      createdAt: data.createdAt || new Date().toISOString(),
+      updatedAt: data.updatedAt || new Date().toISOString()
+    };
+      
      
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -71,7 +87,7 @@ const TicketPage = async ({ params }: { params: PageParams }) => {
       if (ticket) {
         ticketData = {
           ...ticket,
-          _id: params.id // Ensure we use the ID from params
+          _id: params.id 
         };
       }
     }
