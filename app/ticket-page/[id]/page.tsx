@@ -63,8 +63,11 @@ interface PageParams {
   }
 };
   
-const TicketPage = async ({ params }: { params: PageParams }) => {
-  const isEditMode = params.id !== "new" ;
+const TicketPage = async ({ params }: { params: Promise<PageParams> }) => {
+  
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
+  const isEditMode = id !== "new";
 
   const initialTicketData: TicketData = {
     _id: "new",
@@ -83,11 +86,11 @@ const TicketPage = async ({ params }: { params: PageParams }) => {
 
   if (isEditMode) {
     
-      const ticket = await getTicketById(params.id);
+      const ticket = await getTicketById(id);
       if (ticket) {
         ticketData = {
           ...ticket,
-          _id: params.id 
+          _id: id 
         };
       }
     }

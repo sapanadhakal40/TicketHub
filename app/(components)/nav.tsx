@@ -36,7 +36,7 @@ const Nav = () => {
                 <div className="flex items-center space-x-4">
                     <button
                         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                        className="p-2 rounded-full hover:bg-card-hover-bg transition-colors"
+                        className="p-2 hover:bg-card-hover-bg transition-colors"
                         aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
                     >
                         <FontAwesomeIcon
@@ -44,7 +44,7 @@ const Nav = () => {
                             className={`icon ${theme === "light" ? "" : "text-yellow-500"}`}
                         />
                     </button>
-                    <div className="flex items-center bg-card-bg px-3 py-2 rounded-full">
+                    <div className="flex items-center bg-card-bg px-3 py-2 ">
                         <FontAwesomeIcon icon={faUser} className="text-text-color mr-2" />
                         <p className="text-text-color">sapna@gmail.com</p>
                     </div>
