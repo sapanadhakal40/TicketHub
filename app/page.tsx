@@ -21,6 +21,7 @@ const Dashboard = () => {
         headers: {
           'Content-Type': 'application/json',
         },
+        cache: 'no-store',
       });
       
       if (!res.ok) {
@@ -45,6 +46,7 @@ const Dashboard = () => {
         }));
         
         setTickets(formattedTickets);
+        setError("");
       } catch (error) {
         console.error("Error fetching tickets:", error);
         setError("Failed to load tickets. Please try again later.");
