@@ -3,11 +3,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import Ticket, { connectDB} from '../../../../(models)/ticket';
 import { isValidObjectId } from 'mongoose';
 
+interface RouteParams {
+  params: {
+    id: string;
+  }
+}
 
 // Get a specific ticket
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: RouteParams
 ) {
   try {
     if (!isValidObjectId(params.id)) {
