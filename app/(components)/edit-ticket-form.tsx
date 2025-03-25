@@ -156,7 +156,7 @@ const EditTicketForm = ({ ticket }: EditTicketFormProps) => {
         <label className="block text-gray-700 dark:text-gray-300 mb-2" htmlFor="priority">
                 Priority
             </label>
-            <div className="flex space-x-4">
+            <div className="flex flex-wrap gap-4 sm:gap-6">
                 {[1, 2, 3, 4, 5].map((num) => (
                     <div key={num} className="flex items-center">
                         <input
