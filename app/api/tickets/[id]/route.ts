@@ -3,25 +3,25 @@ import { NextRequest, NextResponse } from 'next/server';
 import Ticket, { connectDB} from '../../../../(models)/ticket';
 import { isValidObjectId } from 'mongoose';
 
-interface RouteContext {
+interface Context {
   params: {
     id: string;
-  }
+  };
 }
 // Get a specific ticket
 export async function GET(
   request: NextRequest,
-context: RouteContext
+  { params }: Context
 ) {
   try {
-    if (!isValidObjectId(context.params.id)) {
+    if (!isValidObjectId(params.id)) {
         return NextResponse.json(
           { error: "Invalid ticket ID format" },
           { status: 400 }
         );
       }
     await connectDB();
-    const ticket = await Ticket.findById(context.params.id);
+    const ticket = await Ticket.findById(params.id);
     if (!ticket) {
         return NextResponse.json({ error: "Ticket not found" }, { status: 404 });
       }
@@ -42,7 +42,7 @@ context: RouteContext
 // Update a ticket
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: Context
 ) {
   try {
     if (!isValidObjectId(params.id)) {
@@ -73,7 +73,7 @@ export async function PUT(
 // Delete a ticket
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: Context
 ) {
   try {
     if (!isValidObjectId(params.id)) {
