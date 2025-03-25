@@ -8,7 +8,6 @@ interface RouteContext {
     id: string;
   }
 }
-
 // Get a specific ticket
 export async function GET(
   request: NextRequest,
