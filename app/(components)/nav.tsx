@@ -65,7 +65,7 @@ const Nav = () => {
                     >
                         <FontAwesomeIcon
                             icon={theme === "light" ? faMoon : faSun}
-                            className={`icon ${theme === "light" ? "" : "text-yellow-500"}`}
+                            className="icon"
                         />
                     </button>
                     <button 
