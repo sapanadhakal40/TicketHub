@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+"use client"
 import DeleteBlock from "./delete-block"
 import PriorityDisplay from "./priority-display"
 import ProgressDisplay from "./progress-display"
@@ -8,13 +9,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faClock, faEdit, } from "@fortawesome/free-solid-svg-icons"
 import Link from "next/link"
 import { useState } from "react"
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface TicketCardProps {
     ticket: Ticket;
 }
  
  const TicketCard = ({ ticket }: TicketCardProps) => {
+  const queryClient = useQueryClient();
    const [isHovered, setIsHovered] = useState(false);
+
+   
 
    const formattedDate = new Date(ticket.createdAt).toLocaleDateString();
 

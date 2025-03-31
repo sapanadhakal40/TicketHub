@@ -2,10 +2,7 @@ import EditTicketForm from "../../(components)/edit-ticket-form";
 import { isValidObjectId } from "mongoose";
 
 
-interface PageParams {
 
-    id: string;
-  };
   interface TicketData {
     _id: string;
     title: string;
@@ -63,13 +60,11 @@ interface PageParams {
   }
 };
   
-const TicketPage = async ({ params }: { params: Promise<PageParams> }) => {
-  
-  const resolvedParams = await params;
-  const id = resolvedParams.id;
+const TicketPage = async (context: { params: Promise<{ id: string }> }) => {
+  const { id } = await context.params;
   const isEditMode = id !== "new";
 
-  const initialTicketData: TicketData = {
+  const initialTicketData = {
     _id: "new",
     title: "",
     description: "",
@@ -85,16 +80,22 @@ const TicketPage = async ({ params }: { params: Promise<PageParams> }) => {
   let ticketData = initialTicketData;
 
   if (isEditMode) {
-    
-      const ticket = await getTicketById(id);
-      if (ticket) {
-        ticketData = {
-          ...ticket,
-          _id: id 
-        };
-      }
+    const fetchedTicket = await getTicketById(id);
+    if (!fetchedTicket) {
+      return <div>Error loading ticket</div>;
     }
-  return <EditTicketForm ticket={ticketData} />;
+    ticketData = fetchedTicket;
+  }
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-6">
+        {isEditMode ? "Edit Ticket" : "Create New Ticket"}
+      </h1>
+      <EditTicketForm 
+         ticket={ticketData}
+      />
+    </div>
+  );
 };
 
 export default TicketPage;

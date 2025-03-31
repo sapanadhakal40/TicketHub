@@ -1,7 +1,5 @@
 "use client";
-
-
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import TicketCard from './(components)/ticket-card';
 import { Ticket } from './types/ticket';
 import Link from 'next/link';
@@ -9,30 +7,17 @@ import Link from 'next/link';
 
 
 const Dashboard = () => {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchTickets = async () => {
-      try{
-      const res = await fetch('/api/tickets', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        cache: 'no-store',
-      });
+const { data: tickets, error, isLoading } = useQuery({
+  queryKey: ['tickets'],
+  queryFn: async () => {
+    const res = await fetch('/api/tickets');
+    if (!res.ok) throw new Error('Failed to fetch tickets');
+    const data = await res.json();
       
-      if (!res.ok) {
-        throw new Error('Failed to fetch tickets');
-      }
-      
-      const data = await res.json();
-      
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return data.map((ticket: any) => ({
         
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const formattedTickets = data.map((ticket: any) => ({
+
           id: ticket._id.toString(),
           title: ticket.title,
           description: ticket.description,
@@ -43,20 +28,11 @@ const Dashboard = () => {
           active: ticket.active,
           createdAt: ticket.createdAt,
           updatedAt: ticket.updatedAt
-        }));
+        })) as Ticket[];
         
-        setTickets(formattedTickets);
-        setError("");
-      } catch (error) {
-        console.error("Error fetching tickets:", error);
-        setError("Failed to load tickets. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchTickets();
-  }, []);
-
+  }
+});
+       
 
   return (
     <div className="min-h-screen bg-card-bg dark:bg-primary-900">
@@ -71,15 +47,15 @@ const Dashboard = () => {
           </Link>
         </div>
         
-        {loading ? (
+        {isLoading ? (
           <div className="flex justify-center items-center h-64">
             <p className="text-primary-600 dark:text-primary-300">Loading tickets...</p>
           </div>
         ) : error ? (
           <div className="flex justify-center items-center h-64">
-            <p className="text-red-500">{error}</p>
+            <p className="text-red-500">{error.message}</p>
           </div>
-        ) : tickets.length === 0 ? (
+        ) : tickets?.length === 0 ? (
           <div className="flex justify-center items-center h-64">
             <div className="text-center">
               <p className="text-primary-600 dark:text-primary-300 mb-4">No tickets found.</p>
@@ -93,8 +69,8 @@ const Dashboard = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-8">
-            {tickets.map((ticket) => (
-              <TicketCard key={ticket.id} ticket={ticket} />
+            {tickets?.map((ticket) => (
+              <TicketCard key={ticket.id} ticket={ticket}  />
             ))}
           </div>
         )}

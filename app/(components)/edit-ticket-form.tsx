@@ -5,16 +5,19 @@ import { useState } from "react";
 
 interface Ticket {
   _id: string;
-  title?: string;
-  description?: string;
-  priority?: number;
-  progress?: number;
-  status?: string;
-  category?: string;
+  title: string;
+  description: string;
+  category: string;
+  priority: number;
+  progress: number;
+  status: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface EditTicketFormProps {
-  ticket: Ticket;
+  ticket: Partial<Ticket> & { _id: string };
 }
 
 const EditTicketForm = ({ ticket }: EditTicketFormProps) => {
